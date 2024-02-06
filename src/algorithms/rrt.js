@@ -1,6 +1,7 @@
 import {getDist} from "./utils";
 
 function RRT(map) {
+    console.log("please")
     const MAX_NODES = 20000
     map.add_node(map.get_start());
     let size = map.get_size()
@@ -10,13 +11,14 @@ function RRT(map) {
     while (map.get_num_nodes() < MAX_NODES) {
         // TODO: Implement the logic for RRT in JavaScript
         let random_node = map.node_generator();
-
+        console.log(random_node)
         // track the closest distance and the corresponding node
         let min_dist = Infinity;
         let nearest = null;
 
         // iterate through the nodes
         for (const node of map.get_nodes()) {
+            console.log(node)
             const distance = getDist(node, random_node);
             if (distance < min_dist) {
                 min_dist = distance;
@@ -49,3 +51,5 @@ function sleep(ms) {
     clearInterval(sleepSetTimeout_ctrl);
     return new Promise(resolve => sleepSetTimeout_ctrl = setTimeout(resolve, ms));
 }
+
+export {RRT}

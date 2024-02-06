@@ -1,6 +1,15 @@
 import React, { useRef, useState } from 'react'
 import { Canvas, useFrame } from 'react-three-fiber';
 import { OrbitControls } from '@react-three/drei'
+import {robot} from "../algorithms/robot";
+import {Map} from "../algorithms/map";
+import {RRT} from "../algorithms/rrt";
+
+let mappie = new Map(true)
+let startnode = mappie.get_start()
+let robbie = new robot(startnode.getX(),startnode.getY(),mappie)
+RRT(mappie)
+
 let rotVal= Math.random()/50
 function Box(props) {
     // This reference gives us direct access to the THREE.Mesh object
@@ -32,6 +41,7 @@ function Box(props) {
 }
 
 
+
 function Pathing() {
     return (
         <div style={{height: 500}}>
@@ -41,6 +51,7 @@ function Pathing() {
                 <pointLight position={[-10, -10, -10]} decay={0} intensity={Math.PI}/>
                 <Box position={[-1.2, 0, 0]}/>
                 <Box position={[1.2, 0, 0]}/>
+                <Box position = {[robbie.getX(),robbie.getY(),0]}/>
                 <OrbitControls />
                 <gridHelper rotation-x={Math.PI / 4} args={[20, 20]}/>
             </Canvas>

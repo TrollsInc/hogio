@@ -21,7 +21,7 @@ class Map{
         this.exploration_mode = exploration_mode
         this.explored_obstacles = []
     }
-    is_inbound(self, node) {
+    is_inbound(node) {
         return (node.getX() >= 0) && (node.getY() >= 0) && (node.getX() < this.width) && (node.getY() < this.height);
     }
 
@@ -266,3 +266,5 @@ class Map{
         return Math.min(...distances)
     }
 }
+
+export {Map}

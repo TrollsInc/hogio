@@ -19,7 +19,7 @@ class robot {
             [ROBOT_LENGTH / 2 - HEAD_WIDTH, ROBOT_WIDTH / 2, 1]
         ]
 
-    constructor(x,y,map=null) {
+    constructor(x,y,map) {
         this.x = x
         this.y =y
         this.theta = 0
@@ -77,3 +77,5 @@ function sleep(ms) {
     clearInterval(sleepSetTimeout_ctrl);
     return new Promise(resolve => sleepSetTimeout_ctrl = setTimeout(resolve, ms));
 }
+
+export {robot}
