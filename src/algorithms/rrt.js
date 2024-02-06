@@ -1,4 +1,6 @@
 import {getDist} from "./utils";
+import {Node} from "./utils";
+const VISION_DISTANCE = 30.0
 
 function RRT(map) {
     const MAX_NODES = 20000
@@ -46,6 +48,44 @@ function RRT(map) {
         console.log("Please try again :-(");
     }
 }
+
+async function robot_planning_with_exploration(robbie, map) {
+    map.check_new_obstacles(robbie, VISION_DISTANCE);
+    RRT(map);
+    let path = map.get_smoothed_path();
+
+    // while the current robot position is not at the goal:
+    while (getDist(robbie, map.get_goals()[0]) > 1) {
+        // Get the next node from the path
+        let next_pos = path.shift();
+
+        let angle_to_turn = Math.atan2(next_pos.y - robbie.y, next_pos.x - robbie.x);
+        // follow piazza post
+        angle_to_turn -= robbie.theta;
+        robbie.turn_in_place(angle_to_turn);
+
+        // while robot has not reached the next node in the path
+        while (getDist(robbie, next_pos) > 1) {
+            // detect any visible obstacles and update cmap
+            if (map.check_new_obstacles(robbie, VISION_DISTANCE)) {
+                map.reset(new Node(robbie.getX(), robbie.getY()));
+                RRT(map);
+                path = map.get_smoothed_path();
+                next_pos = path.shift();
+
+                angle_to_turn = Math.atan2(next_pos.y - robbie.y, next_pos.x - robbie.x);
+                // follow piazza post
+                angle_to_turn -= robbie.theta;
+                robbie.turn_in_place(angle_to_turn);
+            }
+
+            // otherwise, drive straight towards the next node within vision distance
+            const distanceToMove = Math.min(VISION_DISTANCE, getDist(robbie, next_pos));
+            await robbie.move_forward(distanceToMove);
+        }
+    }
+}
+
 let sleepSetTimeout_ctrl;
 function sleep(ms) {
     clearInterval(sleepSetTimeout_ctrl);
