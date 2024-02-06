@@ -1,0 +1,96 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway);
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    color: white;
+    height: 100vh;
+    background-color: black;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+}
+
+.siteTitle {
+    font-family: "Raleway";
+    max-width: 50%;
+    font-size: 50px;
+    text-align: left;
+    padding: .25rem;
+}
+
+h1 {
+    font-family: "Raleway";
+    max-width: 50%;
+    font-size: 50px;
+    text-align: left;
+    padding-left: 50px;
+    animation: text-focus-in 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530);
+}
+
+.container {
+    margin: 1rem;
+    text-align: center;
+}
+
+.nav {
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    color: white;
+    position: sticky;
+    top: 0;
+    font-family: "Raleway";
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    text-align: center;
+    padding-left: 50px;
+}
+
+.nav ul {
+    text-align: center;
+    margin: 0;
+    list-style: none;
+    gap: 1rem;
+    display: flex;
+    padding: 24px 10px;
+
+}
+
+.nav a {
+    color: inherit;
+    text-decoration: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: .25rem;
+}
+
+.nav li.active {
+    color: white;
+}
+
+.nav li {
+    transition: 0.4s;
+    color: grey;
+    font-size: 20px;
+    text-decoration: none;
+    padding: 24px 10px;
+    margin: 0 10px;
+}
+
+.nav li:hover {
+    background-color: rgba(232, 236, 241, 0.3);
+}
+
+
+.scrollDown{
+    position: relative;
+    text-align: center;
+    margin-top: 100px;
+    align-items: center;
+    animation: updown 0.5s infinite alternate;
+}
