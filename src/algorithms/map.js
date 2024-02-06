@@ -131,6 +131,84 @@ class Map{
     is_solved(){
         return this.solved
     }
+
+    step_from_to(node0, node1, limit=75){
+        let dist = getDist(node0,node1)
+        if(dist>limit){
+            const diffx = node1.getX()-node0.getX()
+            const diffy = node1.getY()-node0.getY()
+            const angle = Math.atan2(diffy,diffx)
+            let vectorx = limit*Math.cos(angle)
+            let vectory = limit*Math.sin(angle)
+            return new Node([node0.x+vectorx,node0.y+vectory],null)
+        }
+        return node1
+
+    }
+
+    node_generator(){
+        let rand_node = null
+        while(rand_node == null){
+            let rand_x = Math.floor(Math.random()*(this.width+1))
+            let rand_y = Math.floor(Math.random()*(this.height+1))
+
+            let rand_node = new Node([rand_x,rand_y])
+            if(Math.random()<0.05){
+                rand_node = this.get_goals()[0]
+                break
+            }
+            if(!this.is_inbound(rand_node) || this.is_inside_obstacles(rand_node)){
+                rand_node = null
+            }
+        }
+        return rand_node
+    }
+    get_smoothed_path(){
+        if(this.smoothed){
+            return this.smooth_path
+        }
+        this.smooth_path = this.compute_smooth_path(this.get_path())
+        this.smoothed = true
+        return this.smooth_path
+    }
+    compute_smooth_path(path){
+        for(let i=0;i<2*path.length;i++){
+            let point1 = Math.floor(Math.random()*(path.length+1))
+            let point2 = Math.floor(Math.random()*(path.length+1))
+            let idx1 = Math.min(point1, point2)
+            let idx2 = Math.max(point1, point2)
+            if (idx1 === idx2) {
+                continue
+            } else {
+                let node1= path[idx1]
+                let node2 = path[idx2]
+                if(!this.is_collision_with_obstacles([node1,node2])){
+                    node2.parent = node1
+                    path = path.slice(0,idx1).concat(path.slice(idx2,path.length-1))
+                }
+            }
+        }
+    }
+    get_path(){
+        let final_path =null
+        while(final_path == null){
+            let path = []
+            let curr = null
+            for(let i = 0;i<this.goals;i++){
+                curr = this.goals[i]
+                while(curr.parent != null){
+                    path.push(curr)
+                    curr = curr.parent
+                }
+                if(curr===this.start) {
+                    path.push(curr)
+                    break
+                }
+            }
+            final_path = path.reverse()
+        }
+        return final_path
+    }
     clear_smooth_path(){
         this.smoothed = false
         this.smooth_path = []
