@@ -3,16 +3,12 @@ import { Canvas, useFrame } from 'react-three-fiber';
 import { OrbitControls } from '@react-three/drei'
 import {robot} from "../algorithms/robot";
 import {Map} from "../algorithms/map";
-import {RRT} from "../algorithms/rrt";
+import {rrt} from "../algorithms/rrt";
 
 let mappie = new Map(false)
 let startnode = mappie.get_start()
 let robbie = new robot(startnode.getX(),startnode.getY(),mappie)
-//RRT(mappie)
-const startX = robbie.getX()
-const startY = robbie.getY()
-let dist = 10
-let move = true
+let path = rrt(mappie)
 function Robot(props) {
     // This reference gives us direct access to the THREE.Mesh object
     const ref = useRef()
@@ -20,10 +16,10 @@ function Robot(props) {
         ref.current.position.x = robbie.getX()
         ref.current.position.y = robbie.getY()
         ref.current.position.z = 0
-        if(dist>0){
-            dist -= 0.05
-            robbie.move(0.05)
-        }
+        // if(dist>0){
+        //     dist -= 0.05
+        //     robbie.move(0.05)
+        // }
         ref.current.rotation.x = clock.getElapsedTime()
     })
 
