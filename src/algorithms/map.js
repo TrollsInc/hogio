@@ -123,8 +123,68 @@ class Map{
                 this.nodes.push(goal)
                 this.node_paths.push([end_node,goal])
                 this.solved = true
+                break
             }
         }
     }
 
+    is_solved(){
+        return this.solved
+    }
+    clear_smooth_path(){
+        this.smoothed = false
+        this.smooth_path = []
+    }
+    clear_nodes(){
+        this.node_paths = []
+    }
+    clear_goals(){
+        this.goals = []
+    }
+    clear_obstacles(){
+        this.obstacles = []
+    }
+    check_new_obstacles(robot,vision_distance){
+        let has_new_obstacle = false
+        for(let i=0;i<this.obstacles.length;i++){
+            let obstacle = this.obstacles[i]
+            if(this.explored_obstacles.indexOf(obstacle)===-1){
+                if(this.distance_to_obstacle(robot,obstacle)<=vision_distance){
+                    this.explored_obstacles.push(obstacle)
+                    has_new_obstacle = true
+                }
+            }
+        }
+        return has_new_obstacle
+    }
+    distance_to_obstacle(robot,obstacle){
+        let x = robot.getX()
+        let y = robot.getY()
+        let x1 = obstacle[0].getX()
+        let y1 = obstacle[0].getY()
+        let x2 = obstacle[2].getX()
+        let y2 = obstacle[2].getY()
+        x1 = Math.min(x1, x2)
+        x2 = Math.max(x1, x2)
+        y1 = Math.min(y1, y2)
+        y2 = Math.max(y1, y2)
+
+        let distances = []
+        if(x1 < x < x2 && y1 < y < y2){
+            return 0
+        }
+        if(x1 < x < x2){
+            distances.push(Math.min(Math.abs(y - y1), Math.abs(y - y2)))
+        }
+        if(y1 < y < y2){
+            distances.push(Math.min(Math.abs(x - x1), Math.abs(x - x2)))
+        }
+        for (let i =0; i<obstacle.length;i++){
+            let corner = obstacle[i]
+            let bx = corner.getX()
+            let by = corner.getY()
+            distances.push(Math.sqrt((x - bx)^2 + (y - by)^2))
+        }
+        return Math.min(...distances)
+    }
 }
