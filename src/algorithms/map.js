@@ -7,7 +7,7 @@ class Map{
         this.width = 650
         this.height = 450
         this.start = new Node([37,37],null)
-        this.goals = new Node([612, 412],null)
+        this.goals = [new Node([612, 412],null)]
 
         this.obstacles = []
         for(let i=0; i<obs.length;i++){
@@ -38,7 +38,7 @@ class Map{
         for (let i = 0; i<obstacles.length; i++){
             let obstacle = obstacles[i]
             let num_sides = obstacle.length
-            for(let index =0; index<num_sides; index++){
+            for(let index = 0; index<num_sides; index++){
                 let side_start = obstacle[index]
                 let side_end = obstacle[(index + 1) % num_sides]
                 if (intersects(line_start, line_end, side_start, side_end)){
@@ -131,6 +131,22 @@ class Map{
     is_solved(){
         return this.solved
     }
+    is_solution_valid(){
+        if(!this.solved){
+            return false
+        }
+        let curr = null
+        for(let i =0;i<this.goals.length;i++){
+            curr = this.goals[i]
+            while(curr.getParent()!==null){
+                curr = curr.parent
+            }
+            if(curr===this.start){
+                return  true
+            }
+        }
+        return false
+    }
 
     step_from_to(node0, node1, limit=75){
         let dist = getDist(node0,node1)
@@ -152,7 +168,7 @@ class Map{
             let rand_x = Math.floor(Math.random()*(this.width+1))
             let rand_y = Math.floor(Math.random()*(this.height+1))
 
-            let rand_node = new Node([rand_x,rand_y])
+            rand_node = new Node([rand_x,rand_y],null)
             if(Math.random()<0.05){
                 rand_node = this.get_goals()[0]
                 break
@@ -167,7 +183,7 @@ class Map{
         if(this.smoothed){
             return this.smooth_path
         }
-        this.smooth_path = this.compute_smooth_path(this.get_path())
+        this.compute_smooth_path(this.get_path())
         this.smoothed = true
         return this.smooth_path
     }
@@ -177,9 +193,7 @@ class Map{
             let point2 = Math.floor(Math.random()*(path.length+1))
             let idx1 = Math.min(point1, point2)
             let idx2 = Math.max(point1, point2)
-            if (idx1 === idx2) {
-                continue
-            } else {
+            if (idx1 !== idx2) {
                 let node1= path[idx1]
                 let node2 = path[idx2]
                 if(!this.is_collision_with_obstacles([node1,node2])){
@@ -196,7 +210,7 @@ class Map{
             let curr = null
             for(let i = 0;i<this.goals;i++){
                 curr = this.goals[i]
-                while(curr.parent != null){
+                while(curr.getParent() != null){
                     path.push(curr)
                     curr = curr.parent
                 }

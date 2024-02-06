@@ -5,7 +5,7 @@ import {robot} from "../algorithms/robot";
 import {Map} from "../algorithms/map";
 import {RRT} from "../algorithms/rrt";
 
-let mappie = new Map(true)
+let mappie = new Map(false)
 let startnode = mappie.get_start()
 let robbie = new robot(startnode.getX(),startnode.getY(),mappie)
 RRT(mappie)
@@ -20,6 +20,7 @@ function Box(props) {
     if(clicked){
         rotVal = Math.random()/50
     }
+    console.log(robbie.getX(),robbie.getY())
     // Subscribe this component to the render-loop, rotate the mesh every frame
     useFrame((state, delta) =>
         (ref.current.rotation.x += clicked? rotVal: -rotVal,

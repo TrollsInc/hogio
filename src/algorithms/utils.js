@@ -9,6 +9,9 @@ class Node{
     getY(){
         return this.coord[1]
     }
+    getParent(){
+        return this.parent
+    }
 }
 
 function getDist(p, q){
