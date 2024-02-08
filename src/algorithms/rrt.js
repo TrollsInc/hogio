@@ -3,7 +3,7 @@ import {Node} from "./utils";
 const VISION_DISTANCE = 30.0
 
 function RRT(map) {
-    const MAX_NODES = 200
+    const MAX_NODES = 20000
     map.add_node(map.get_start());
     let size = map.get_size()
     const width = size[0]
@@ -16,15 +16,13 @@ function RRT(map) {
         let nearest = null;
         // iterate through the nodes
         for (const node of map.get_nodes()) {
-            console.log(node)
             const distance = getDist(node, random_node);
-            console.log("distance: " + distance)
             if (distance < min_dist) {
                 min_dist = distance;
                 nearest = node;
             }
         }
-        if(!nearest){
+        if(nearest==null){
             continue
         }
         random_node = map.step_from_to(nearest, random_node);
@@ -41,6 +39,7 @@ function RRT(map) {
         console.log("A valid solution has been found :-) ");
         console.log("Nodes created: ", map.get_num_nodes());
         console.log("path: ", path)
+        console.log("smoothed path: ",smoothed_path)
         console.log("goal nodes: ", map.get_goals())
         console.log("Path length: ", path.length);
         console.log("Smoothed path length: ", smoothed_path.length);
@@ -48,91 +47,6 @@ function RRT(map) {
         console.log("Please try again :-(");
     }
 }
-function rrt(map, step_limit = 2.5) {
-    const start_node = map.get_start()
-    const goal_node = map.get_goals()[0]
-    let node_list = [start_node];
-    while (true) {
-        if (node_list.length > 20000) {
-            node_list = [start_node];
-            console.log("Re-running RRT");
-        }
-        if (Math.random() <= 0.25) {
-            var x = goal_node.getX(), y = goal_node.getY();
-        } else {
-            let node = map.get_random_valid_node();
-            x= node.getX()
-            y = node.getY()
-        }
-        const rand_node = new Node([x, y]);
-        let nearest_node_dist = Infinity;
-        let nearest_node = null;
-        for (const node of node_list) {
-            if (getDist(node, rand_node) < nearest_node_dist &&
-                !map.is_collision_with_obstacles(node, rand_node)) {
-                nearest_node_dist = getDist(node, rand_node);
-                nearest_node = node;
-            }
-        }
-        if (!nearest_node) {
-            continue;
-        }
-
-        // Step towards rand node from nearest node
-        let new_node;
-        if (getDist(nearest_node, rand_node) < step_limit) {
-            new_node = rand_node;
-        } else {
-            const theta = Math.atan2(rand_node.getY() - nearest_node.getY(), rand_node.getX() - nearest_node.getX());
-            new_node = new Node([
-                nearest_node.x + step_limit * Math.cos(theta),
-                nearest_node.y + step_limit * Math.sin(theta)
-            ]);
-        }
-        new_node.parent = nearest_node;
-        node_list.push(new_node);
-
-        // Check ending condition
-        if (getDist(new_node, goal_node) < 0.5) {
-            goal_node.parent = new_node;
-            break;
-        }
-    }
-
-    let path = [goal_node];
-    let curr_node = goal_node;
-    while (curr_node !== start_node) {
-        curr_node = curr_node.parent;
-        path.push(curr_node);
-    }
-    path = path.reverse();
-
-    // path smoothing
-    let plen = path.length;
-    if (plen !== 0) {
-        //run 100 trials
-        for (let i = 0; i < 100; i++) {
-            //pick two random indices
-            const indices = [Math.floor(Math.random() * plen), Math.floor(Math.random() * plen)];
-            indices.sort();
-
-            //if they are not the same or consecutive
-            if (indices[1] - indices[0] > 1) {
-                const p1 = path[indices[0]];
-                const p2 = path[indices[1]];
-
-                //connect the two nodes directly if there is a straight line between them
-                if (!map.is_collision_with_obstacles(p1, p2)) {
-                    path = path.slice(0, indices[0] + 1).concat(path.slice(indices[1]));
-                    plen = path.length;
-                }
-            }
-        }
-    }
-    console.log(path)
-    return path;
-}
-
 
 
 async function robot_planning_with_exploration(robbie, map) {
@@ -171,10 +85,4 @@ async function robot_planning_with_exploration(robbie, map) {
     }
 }
 
-let sleepSetTimeout_ctrl;
-function sleep(ms) {
-    clearInterval(sleepSetTimeout_ctrl);
-    return new Promise(resolve => sleepSetTimeout_ctrl = setTimeout(resolve, ms));
-}
-
-export {rrt,RRT}
+export {RRT}

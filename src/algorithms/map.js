@@ -11,7 +11,12 @@ class Map{
 
         this.obstacles = []
         for(let i=0; i<obs.length;i++){
-            this.obstacles.push(new Node(obs[i],null))
+            let obstacle = obs[i]
+            let nodeList = []
+            for(let k = 0;k<obstacle.length;k++){
+                nodeList.push(new Node(obstacle[k],null))
+            }
+            this.obstacles.push(nodeList)
         }
         this.nodes = []
         this.node_paths = []
@@ -36,7 +41,6 @@ class Map{
         let line_start = line_segment[0]
         let line_end = line_segment[1]
         for (let i = 0; i<obstacles.length; i++){
-            console.log(i)
             let obstacle = obstacles[i]
             let num_sides = obstacle.length
             for(let index = 0; index<num_sides; index++){
@@ -50,7 +54,7 @@ class Map{
         return false
     }
 
-    is_inside_obstacles(self, node, use_all_obstacles){
+    is_inside_obstacles(node, use_all_obstacles){
         let obstacles
         if(this.exploration_mode && !use_all_obstacles){
             obstacles = this.explored_obstacles
@@ -65,7 +69,8 @@ class Map{
             for(let index =0; index<num_sides; index++){
                 let side_start = obstacle[index]
                 let side_end = obstacle[(index + 1) % num_sides]
-                if (getOrientation(side_start, side_end, node)===2){
+                let orientation = getOrientation(side_start, side_end, node)
+                if (orientation===2){
                     is_inside = false
                     break
                 }
@@ -109,7 +114,7 @@ class Map{
         if(this.is_collision_with_obstacles([start_node,end_node])){
             return false
         }
-        end_node.parent = start_node
+        end_node.setParent(start_node)
         this.nodes.push(end_node)
         this.node_paths.push([start_node,end_node])
 
@@ -120,7 +125,7 @@ class Map{
                 break
             }
             if (getDist(goal,end_node)<15 && !(this.is_collision_with_obstacles([end_node,goal]))){
-                goal.parent = end_node
+                goal.setParent(end_node)
                 this.nodes.push(goal)
                 this.node_paths.push([end_node,goal])
                 this.solved = true
@@ -140,7 +145,7 @@ class Map{
         for(let i =0;i<this.goals.length;i++){
             curr = this.goals[i]
             while(curr.getParent()!==null){
-                curr = curr.parent
+                curr = curr.getParent()
             }
             if(curr===this.start){
                 return true
@@ -157,10 +162,9 @@ class Map{
             const angle = Math.atan2(diffy,diffx)
             let vectorx = limit*Math.cos(angle)
             let vectory = limit*Math.sin(angle)
-            return new Node([node0.x+vectorx,node0.y+vectory],null)
+            return new Node([node0.getX()+vectorx,node0.getY()+vectory],null)
         }
         return node1
-
     }
 
     node_generator(){
@@ -174,48 +178,47 @@ class Map{
                 rand_node = this.get_goals()[0]
                 break
             }
-            if(!this.is_inbound(rand_node) || this.is_inside_obstacles(rand_node)){
+            if(!this.is_inbound(rand_node) || this.is_inside_obstacles(rand_node,true)){
                 rand_node = null
             }
         }
-        console.log("random node")
-        console.log(rand_node)
         return rand_node
     }
     get_smoothed_path(){
         if(this.smoothed){
             return this.smooth_path
         }
-        this.compute_smooth_path(this.get_path())
+        this.smooth_path = this.compute_smooth_path(this.get_path())
         this.smoothed = true
         return this.smooth_path
     }
     compute_smooth_path(path){
         for(let i=0;i<2*path.length;i++){
-            let point1 = Math.floor(Math.random()*(path.length+1))
-            let point2 = Math.floor(Math.random()*(path.length+1))
+            let point1 = Math.floor(Math.random()*(path.length))
+            let point2 = Math.floor(Math.random()*(path.length))
             let idx1 = Math.min(point1, point2)
             let idx2 = Math.max(point1, point2)
             if (idx1 !== idx2) {
                 let node1= path[idx1]
                 let node2 = path[idx2]
                 if(!this.is_collision_with_obstacles([node1,node2])){
-                    node2.parent = node1
-                    path = path.slice(0,idx1).concat(path.slice(idx2,path.length-1))
+                    node2.setParent(node1)
+                    path = path.slice(0,idx1+1).concat(path.slice(idx2,path.length))
                 }
             }
         }
+        return path
     }
     get_path(){
-        let final_path =null
+        let final_path = null
         while(final_path == null){
             let path = []
             let curr = null
-            for(let i = 0;i<this.goals;i++){
+            for(let i = 0;i<this.goals.length;i++){
                 curr = this.goals[i]
                 while(curr.getParent() != null){
                     path.push(curr)
-                    curr = curr.parent
+                    curr = curr.getParent()
                 }
                 if(curr===this.start) {
                     path.push(curr)

@@ -3,7 +3,7 @@ import { Canvas, useFrame } from 'react-three-fiber';
 import { OrbitControls } from '@react-three/drei'
 import {robot} from "../algorithms/robot";
 import {Map} from "../algorithms/map";
-import {RRT, rrt} from "../algorithms/rrt";
+import {RRT} from "../algorithms/rrt";
 
 let mappie = new Map(false)
 let startnode = mappie.get_start()

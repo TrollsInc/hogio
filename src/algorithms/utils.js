@@ -12,6 +12,9 @@ class Node{
     getParent(){
         return this.parent
     }
+    setParent(parent){
+        this.parent = parent
+    }
 }
 
 function getDist(p, q){
