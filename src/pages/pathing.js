@@ -3,12 +3,13 @@ import { Canvas, useFrame } from 'react-three-fiber';
 import { OrbitControls } from '@react-three/drei'
 import {robot} from "../algorithms/robot";
 import {Map} from "../algorithms/map";
-import {rrt} from "../algorithms/rrt";
+import {RRT, rrt} from "../algorithms/rrt";
 
 let mappie = new Map(false)
 let startnode = mappie.get_start()
 let robbie = new robot(startnode.getX(),startnode.getY(),mappie)
-let path = rrt(mappie)
+let path = RRT(mappie)
+console.log(path)
 function Robot(props) {
     // This reference gives us direct access to the THREE.Mesh object
     const ref = useRef()

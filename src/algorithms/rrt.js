@@ -3,7 +3,7 @@ import {Node} from "./utils";
 const VISION_DISTANCE = 30.0
 
 function RRT(map) {
-    const MAX_NODES = 20000
+    const MAX_NODES = 200
     map.add_node(map.get_start());
     let size = map.get_size()
     const width = size[0]
@@ -14,8 +14,6 @@ function RRT(map) {
         // track the closest distance and the corresponding node
         let min_dist = Infinity;
         let nearest = null;
-        console.log("random node")
-        console.log(random_node)
         // iterate through the nodes
         for (const node of map.get_nodes()) {
             console.log(node)

@@ -15,7 +15,7 @@ class Node{
 }
 
 function getDist(p, q){
-    return Math.sqrt((p.getX() - q.getX())^2 + (p.getY() - q.getY())^2)
+    return Math.sqrt((p.getX() - q.getX())**2 + (p.getY() - q.getY())**2)
 }
 function isZero(value){
     return Math.abs(value) < 1e-9
