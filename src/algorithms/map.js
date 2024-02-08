@@ -1,13 +1,14 @@
 import {Node, getDist,isZero,onSegment,getOrientation,intersects} from "./utils"
-const obs = [[[100, 150], [175, 125], [150, 50], [75, 75]],
-    [[350, 425], [375, 350], [300, 325], [275, 400]],
-    [[400, 100], [500, 100], [500, 0], [400, 0]]]
+const obs = [[[10, 15], [17.5, 12.5], [15, 5], [7.5, 7.5]],
+    [[35, 42.5], [37.5, 35], [30, 32.5], [27.5, 40]],
+    [[40, 10], [50, 10], [50, 0], [40, 0]]]
 class Map{
+
     constructor(exploration_mode) {
-        this.width = 650
-        this.height = 450
-        this.start = new Node([37,37],null)
-        this.goals = [new Node([612, 412],null)]
+        this.width = 65
+        this.height = 45
+        this.start = new Node([3.7,3.7],null)
+        this.goals = [new Node([61.2, 41.2],null)]
 
         this.obstacles = []
         for(let i=0; i<obs.length;i++){
@@ -124,7 +125,7 @@ class Map{
                 this.solved = true
                 break
             }
-            if (getDist(goal,end_node)<15 && !(this.is_collision_with_obstacles([end_node,goal]))){
+            if (getDist(goal,end_node)<1.5 && !(this.is_collision_with_obstacles([end_node,goal]))){
                 goal.setParent(end_node)
                 this.nodes.push(goal)
                 this.node_paths.push([end_node,goal])
@@ -154,7 +155,7 @@ class Map{
         return false
     }
 
-    step_from_to(node0, node1, limit=75){
+    step_from_to(node0, node1, limit=7.5){
         let dist = getDist(node0,node1)
         if(dist>limit){
             const diffx = node1.getX()-node0.getX()

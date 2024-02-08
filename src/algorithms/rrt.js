@@ -3,7 +3,7 @@ import {Node} from "./utils";
 const VISION_DISTANCE = 30.0
 
 function RRT(map) {
-    const MAX_NODES = 20000
+    const MAX_NODES = 2000
     map.add_node(map.get_start());
     let size = map.get_size()
     const width = size[0]

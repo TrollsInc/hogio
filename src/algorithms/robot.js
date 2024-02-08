@@ -1,9 +1,9 @@
 
 const SPEED_UP_FACTOR = 16
-const ROBOT_WIDTH = 25
-const ROBOT_LENGTH = 40
-const HEAD_WIDTH = 5
-const VISION_DISTANCE = 30.0
+const ROBOT_WIDTH = 2.5
+const ROBOT_LENGTH = 4
+const HEAD_WIDTH = .5
+const VISION_DISTANCE = 30
 
 class robot {
     ROBOT_CORNERS = [
