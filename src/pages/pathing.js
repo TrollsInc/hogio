@@ -8,8 +8,8 @@ import {RRT} from "../algorithms/rrt";
 let mappie = new Map(false)
 let startnode = mappie.get_start()
 let robbie = new robot(startnode.getX(),startnode.getY(),mappie)
-let path = RRT(mappie)
-console.log(path)
+RRT(mappie)
+let path = mappie.get_smoothed_path()
 function Robot(props) {
     // This reference gives us direct access to the THREE.Mesh object
     const ref = useRef()
