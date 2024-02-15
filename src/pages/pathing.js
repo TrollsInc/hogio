@@ -1,7 +1,8 @@
 import React, { useRef, useState } from 'react'
-import { Canvas, useFrame } from 'react-three-fiber';
+import {Canvas, useFrame, useLoader} from 'react-three-fiber';
 import * as THREE from 'three'
 import {Environment, Box, Sphere, useGLTF, useAnimations} from '@react-three/drei'
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import {robot} from "../algorithms/robot";
 import {Map} from "../algorithms/map";
 import {RRT} from "../algorithms/rrt";
@@ -10,7 +11,7 @@ import {Group} from "three";
 let mappie = new Map(false)
 let startnode = mappie.get_start()
 let robbie = new robot(startnode.getX(),startnode.getY(),mappie)
-const speed = 0.2
+const speed = 0.1
 let path = null
 let currNode = null
 let visualize = false
@@ -30,6 +31,7 @@ function Robot(props) {
     const [shapesOnCanvas,setShapesOnCanvas] = useState([])
     useFrame(   state => {
         state.camera.lookAt(...targetPoint.current)
+
         if(visualize){
             path = mappie.get_smoothed_path()
             if(path!=null){
@@ -41,12 +43,14 @@ function Robot(props) {
                 let vectorX = goalX-robbie.getX()
                 let vectorY = goalY-robbie.getY()
                 let mag = Math.sqrt(vectorX**2+vectorY**2)
-                if(mag>0.1){
+                if(mag>0.05){
                     robbie.setpos([ref.current.position.x+(vectorX/mag)*speed,ref.current.position.y+(vectorY/mag)*speed])
                     ref.current.position.x += (vectorX/mag)*speed
                     ref.current.position.y += (vectorY/mag)*speed
                     ref.current.position.z = 1
                     ref.current.rotation.z = (Math.atan2(vectorY,vectorX)+Math.PI/2)
+
+
 
                 }
                 else if(path.length!==0){
@@ -64,13 +68,14 @@ function Robot(props) {
         }
     })
 
+
+    const seagull = useGLTF('Seagullboyo.glb');
     // Return the view, these are regular Threejs elements expressed in JSX
     return (
         <mesh
             {...props}
             ref={ref}>
-            <boxGeometry args={[1, 2, 1]} />
-            <meshStandardMaterial color={"red"}/>
+            <primitive object={seagull.scene} scale={.1}/>
         </mesh>
     )
 }
