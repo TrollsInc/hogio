@@ -96,3 +96,26 @@ h1 {
     align-items: center;
     animation: updown 0.5s infinite alternate;
 }
+
+.algoButton{
+    font-family: "Raleway";
+    color: lightgrey;
+    outline: 0;
+    background: none;
+    font-size: 25px;
+    border-radius: 5px;
+    border: 2px solid white;
+    align-items: center;
+
+    z-index: 3;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    padding: 10px 25px;
+    height: 48px;
+    transition: 0.5s;
+}
+
+.algoButton:hover {
+    color: white;
+    box-shadow: 0 0 26px #28C8EC;
+}

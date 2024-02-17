@@ -36,15 +36,15 @@ function RRT(map) {
     const smoothed_path = map.get_smoothed_path();
 
     if (map.is_solution_valid()) {
-        console.log("A valid solution has been found :-) ");
-        console.log("Nodes created: ", map.get_num_nodes());
-        console.log("path: ", path)
-        console.log("smoothed path: ",smoothed_path)
-        console.log("goal nodes: ", map.get_goals())
-        console.log("Path length: ", path.length);
-        console.log("Smoothed path length: ", smoothed_path.length);
+        // console.log("A valid solution has been found :-) ");
+        // console.log("Nodes created: ", map.get_num_nodes());
+        // console.log("path: ", path)
+        // console.log("smoothed path: ",smoothed_path)
+        // console.log("goal nodes: ", map.get_goals())
+        // console.log("Path length: ", path.length);
+        // console.log("Smoothed path length: ", smoothed_path.length);
     } else {
-        console.log("Please try again :-(");
+        // console.log("Please try again :-(");
     }
 }
 
