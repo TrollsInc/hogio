@@ -25,10 +25,24 @@ body {
 
 h1 {
     font-family: "Raleway";
-    max-width: 50%;
     font-size: 50px;
     text-align: left;
-    padding-left: 50px;
+    padding-left: 25px;
+    animation: text-focus-in 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530);
+}
+h2 {
+    font-family: "Raleway";
+    font-size: 20px;
+    text-align: left;
+    padding-left: 25px;
+    margin-bottom: 30px;
+    animation: text-focus-in 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530);
+}
+h4 {
+    font-family: "Raleway";
+    font-size: 12px;
+    text-align: left;
+    padding-left: 25px;
     animation: text-focus-in 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530);
 }
 
@@ -109,7 +123,7 @@ h1 {
 
     z-index: 3;
     margin-left: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 10px 25px;
     height: 48px;
     transition: 0.5s;
@@ -117,5 +131,5 @@ h1 {
 
 .algoButton:hover {
     color: white;
-    box-shadow: 0 0 26px #28C8EC;
+    box-shadow: 0 0 26px #ed964a;
 }

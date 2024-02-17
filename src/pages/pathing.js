@@ -189,7 +189,7 @@ const Scene = () =>{
 function Pathing() {
     //const cameraControlRef = useRef();
     return (
-        <div style={{height: "100vh"}}>
+        <div style={{height: "90vh", width:"100vw"}}>
             <Canvas orthographic={false}
                     camera={{position: [mappie.width / 2, -mappie.height, 50], fov: 50}}>
                 <ambientLight intensity={Math.PI / 2}/>
@@ -203,9 +203,14 @@ function Pathing() {
                         Run Algorithm
                     </button>
                 </h1>
+                <h2>
+                    Description for algorithm here:
+                </h2>
                 <h4 align={"left"}>
-                    "Low-Poly Seagull (with Animation & Rigged)" (https://skfb.ly/orun9) by simonaskLDE is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
-                    "Tree G&H" (https://skfb.ly/6TMoo) by MikeDragneel is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+                    "Low-Poly Seagull (with Animation & Rigged)" (https://skfb.ly/orun9) by simonaskLDE is licensed
+                    under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).<br/>
+                    "Tree G&H" (https://skfb.ly/6TMoo) by MikeDragneel is licensed under Creative Commons Attribution
+                    (http://creativecommons.org/licenses/by/4.0/).
                 </h4>
             </div>
         </div>
