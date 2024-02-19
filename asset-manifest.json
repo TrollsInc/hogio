@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/hogio/static/css/main.09d6d32b.css",
-    "main.js": "/hogio/static/js/main.5a0827f0.js",
+    "main.js": "/hogio/static/js/main.67887e92.js",
     "static/js/592.a998b0f2.chunk.js": "/hogio/static/js/592.a998b0f2.chunk.js",
     "index.html": "/hogio/index.html",
     "main.09d6d32b.css.map": "/hogio/static/css/main.09d6d32b.css.map",
-    "main.5a0827f0.js.map": "/hogio/static/js/main.5a0827f0.js.map",
+    "main.67887e92.js.map": "/hogio/static/js/main.67887e92.js.map",
     "592.a998b0f2.chunk.js.map": "/hogio/static/js/592.a998b0f2.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.09d6d32b.css",
-    "static/js/main.5a0827f0.js"
+    "static/js/main.67887e92.js"
   ]
 }
