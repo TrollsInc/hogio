@@ -1,7 +1,7 @@
 import React, {useRef, useState} from 'react'
 import {Canvas, useFrame} from 'react-three-fiber';
 import * as THREE from 'three'
-import {Environment, Box, Sphere, useGLTF, Clone, Stats, Cone} from '@react-three/drei'
+import {Environment, Box, Sphere, useGLTF, Clone} from '@react-three/drei'
 import {robot} from "../algorithms/robot";
 import {Map} from "../algorithms/map";
 import {RRT} from "../algorithms/rrt";
