@@ -189,7 +189,7 @@ const Scene = () =>{
 function Pathing() {
     //const cameraControlRef = useRef();
     return (
-        <div style={{height: "90vh", width:"100vw"}}>
+        <div style={{height: "90vh", width:"100vw", align: "center"}}>
             <Canvas orthographic={false}
                     camera={{position: [mappie.width / 2, -mappie.height, 50], fov: 50}}>
                 <ambientLight intensity={Math.PI / 2}/>
@@ -204,7 +204,18 @@ function Pathing() {
                     </button>
                 </h1>
                 <h2>
-                    Description for algorithm here:
+                    <ul>
+                        <li/> The Rapidly-exploring Random Tree (RRT) algorithm is a path planning algorithm
+                        commonly used in robotics.
+                        <li/> With the help of a search tree, for each step in the algorithm, RRT samples
+                        random configurations (including the goal configuration with a given probability).
+                        <li/> Then, the search tree is expanded towards a target configuration that best avoids
+                        obstacles such as the trees in the visualizer above.
+                        <li/> The search tree shown in red is dynamically updated, with nodes being expanded
+                        as they are reached.
+                        <li/> The RRT visualizer is a tool for better understanding each step of the RRT algorithm
+                        and makes it accessible to anyone interested in learning it.
+                    </ul>
                 </h2>
                 <h4 align={"left"}>
                     "Low-Poly Seagull (with Animation & Rigged)" (https://skfb.ly/orun9) by simonaskLDE is licensed
