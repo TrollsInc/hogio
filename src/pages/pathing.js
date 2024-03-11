@@ -189,7 +189,7 @@ const Scene = () =>{
 function Pathing() {
     //const cameraControlRef = useRef();
     return (
-        <div style={{height: "90vh", width:"100vw", align: "center"}}>
+        <div style={{height: "75vh", width:"100vw"}}>
             <Canvas orthographic={false}
                     camera={{position: [mappie.width / 2, -mappie.height, 50], fov: 50}}>
                 <ambientLight intensity={Math.PI / 2}/>
@@ -204,7 +204,7 @@ function Pathing() {
                     </button>
                 </h1>
                 <h2>
-                    <ul>
+                    <ul style={{listStyleType:"none", lineHeight:"1.6"}}>
                         <li/> The Rapidly-exploring Random Tree (RRT) algorithm is a path planning algorithm
                         commonly used in robotics.
                         <li/> With the help of a search tree, for each step in the algorithm, RRT samples

@@ -9,10 +9,19 @@ body {
     color: white;
     height: 100vh;
     background-color: black;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-y: visible;
     overflow-x: hidden;
-    overflow-y: scroll;
-    scroll-snap-type: y mandatory;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
+*{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 
 
 .siteTitle {
@@ -20,7 +29,6 @@ body {
     max-width: 50%;
     font-size: 50px;
     text-align: left;
-    padding: .25rem;
 }
 
 h1 {
@@ -53,7 +61,7 @@ h4 {
 
 .nav {
     background: rgba(0, 0, 0, 0.5);
-    width: 100%;
+    width: 100vw;
     color: white;
     position: sticky;
     top: 0;
@@ -62,8 +70,8 @@ h4 {
     justify-content: space-between;
     align-items: stretch;
     text-align: center;
-    padding-left: 50px;
-    z-index: 3;
+    padding-left: 2vw;
+    z-index: 1;
 }
 
 .nav ul {
@@ -72,8 +80,6 @@ h4 {
     list-style: none;
     gap: 1rem;
     display: flex;
-    padding: 24px 10px;
-
 }
 
 .nav a {
@@ -90,7 +96,7 @@ h4 {
 }
 
 .nav li {
-    transition: 0.4s;
+    transition: 0.1s;
     color: grey;
     font-size: 20px;
     text-decoration: none;
@@ -99,7 +105,7 @@ h4 {
 }
 
 .nav li:hover {
-    background-color: rgba(232, 236, 241, 0.3);
+    font-style: italic;
 }
 
 
